@@ -54,7 +54,9 @@ const MenuButtons = () => {
       <CreateButton variant="contained" onClick={() => navigate("/creategame")}>
         create new game session
       </CreateButton>
-      <JoinButton variant="contained">join existing game session</JoinButton>
+      <JoinButton variant="contained" onClick={() => navigate("/joingame")}>
+        join existing game session
+      </JoinButton>
       <PastButton variant="contained">view past games</PastButton>
     </Box>
   );

@@ -6,6 +6,7 @@ import theme from "./assets/theme";
 import { Route, Routes } from "react-router-dom";
 import MenuScreen from "./screens/MenuScreen";
 import CreateGameScreen from "./screens/CreateGameScreen";
+import JoinGameScreen from "./screens/JoinGameScreen";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<TitleScreen />} />
           <Route path="/menu" element={<MenuScreen />} />
           <Route path="/creategame" element={<CreateGameScreen />} />
+          <Route path="/joingame" element={<JoinGameScreen />} />
         </Routes>
       </Box>
     </ThemeProvider>

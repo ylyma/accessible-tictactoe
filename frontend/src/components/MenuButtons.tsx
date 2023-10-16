@@ -5,17 +5,22 @@ import "./MenuButtons.css";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import LoginIcon from "@mui/icons-material/Login";
 import FolderIcon from "@mui/icons-material/Folder";
+import { useNavigate } from "react-router-dom";
 
 const MenuButtons = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
 
   const CreateButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: theme.palette.getContrastText(theme.palette.secondary.main),
     backgroundColor: theme.palette.secondary.main,
     marginBottom: 20,
-    fontSize: 20,
+    fontSize: 40,
+    height: 100,
+    transition: "transform 0.2s",
     "&:hover": {
       backgroundColor: theme.palette.secondary.dark,
+      transform: "translate(0px, -8%)",
     },
   }));
 
@@ -23,9 +28,12 @@ const MenuButtons = () => {
     color: theme.palette.getContrastText(theme.palette.success.main),
     backgroundColor: theme.palette.success.main,
     marginBottom: 20,
-    fontSize: 20,
+    fontSize: 40,
+    height: 100,
+    transition: "transform 0.2s",
     "&:hover": {
       backgroundColor: theme.palette.success.dark,
+      transform: "translate(0px, -8%)",
     },
   }));
 
@@ -33,22 +41,21 @@ const MenuButtons = () => {
     color: theme.palette.getContrastText(theme.palette.warning.main),
     backgroundColor: theme.palette.warning.main,
     marginBottom: 20,
-    fontSize: 20,
+    fontSize: 40,
+    height: 100,
+    transition: "transform 0.2s",
     "&:hover": {
       backgroundColor: theme.palette.warning.dark,
+      transform: "translate(0px, -8%)",
     },
   }));
   return (
     <Box className="menu-buttons__container">
-      <CreateButton startIcon={<AddBoxIcon />} variant="contained">
+      <CreateButton variant="contained" onClick={() => navigate("/creategame")}>
         create new game session
       </CreateButton>
-      <JoinButton startIcon={<LoginIcon />} variant="contained">
-        join existing game session
-      </JoinButton>
-      <PastButton startIcon={<FolderIcon />} variant="contained">
-        view past games
-      </PastButton>
+      <JoinButton variant="contained">join existing game session</JoinButton>
+      <PastButton variant="contained">view past games</PastButton>
     </Box>
   );
 };

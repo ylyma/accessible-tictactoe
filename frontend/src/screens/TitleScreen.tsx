@@ -1,7 +1,7 @@
 import React from "react";
 import PlayerNameInput from "../components/PlayerNameInput";
 import { Box, Typography, useTheme } from "@mui/material";
-import "./TitleScreen.css";
+import "./styles.css";
 
 const TitleScreen = () => {
   const theme = useTheme();

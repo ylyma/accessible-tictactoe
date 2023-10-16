@@ -5,6 +5,7 @@ import { Box, ThemeProvider } from "@mui/material";
 import theme from "./assets/theme";
 import { Route, Routes } from "react-router-dom";
 import MenuScreen from "./screens/MenuScreen";
+import CreateGameScreen from "./screens/CreateGameScreen";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<TitleScreen />} />
           <Route path="/menu" element={<MenuScreen />} />
+          <Route path="/creategame" element={<CreateGameScreen />} />
         </Routes>
       </Box>
     </ThemeProvider>

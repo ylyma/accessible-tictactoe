@@ -17,7 +17,7 @@ const PlayerNameInput = () => {
       className="player-name-input__container"
       onSubmit={() => navigate("/menu", { state: { playerName } })}
     >
-      <Typography className="instruction" variant="h6" gutterBottom>
+      <Typography className="instruction" variant="h5" gutterBottom>
         Enter your player name below:
       </Typography>
       <TextField
@@ -35,6 +35,7 @@ const PlayerNameInput = () => {
         variant="contained"
         color="secondary"
         type="submit"
+        sx={{ fontSize: 30 }}
         onSubmit={() => navigate("/menu", { state: { playerName } })}
       >
         enter

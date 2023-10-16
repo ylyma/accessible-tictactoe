@@ -1,0 +1,21 @@
+.box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(50px, auto);
+  gap: 10px;
+}
+
+.instruction {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.textinput {
+  grid-column: 2;
+  grid-row: 4;
+}
+.enter-button {
+  grid-column: 2;
+  grid-row: 5;
+  color: #0b0b45;
+}

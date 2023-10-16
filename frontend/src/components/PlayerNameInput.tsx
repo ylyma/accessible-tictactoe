@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import "./PlayerNameInput.css";
+import { useNavigate } from "react-router-dom";
 
-type Props = {};
-
-const PlayerNameInput = ({}: Props) => {
+const PlayerNameInput = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const [playerName, setPlayerName] = useState<string>("");
+
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPlayerName(event.target.value);
+  };
+
   return (
-    <Box className="box">
+    <form
+      className="player-name-input__container"
+      onSubmit={() => navigate("/menu", { state: { playerName } })}
+    >
       <Typography className="instruction" variant="h6" gutterBottom>
         Enter your player name below:
       </Typography>
@@ -16,14 +25,21 @@ const PlayerNameInput = ({}: Props) => {
         required
         id="filled-required"
         label="Required"
-        defaultValue="Player1"
         variant="filled"
         color="secondary"
+        value={playerName}
+        onChange={handleInput}
       />
-      <Button className="enter-button" variant="contained" color="secondary">
+      <Button
+        className="enter-button"
+        variant="contained"
+        color="secondary"
+        type="submit"
+        onSubmit={() => navigate("/menu", { state: { playerName } })}
+      >
         enter
       </Button>
-    </Box>
+    </form>
   );
 };
 

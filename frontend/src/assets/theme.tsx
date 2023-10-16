@@ -22,6 +22,15 @@ const theme = createTheme({
     secondary: {
       main: "#40559b",
     },
+    error: {
+      main: "#6c2d41",
+    },
+    success: {
+      main: "#2d6c58",
+    },
+    warning: {
+      main: "#9b7040",
+    },
   },
   typography: {
     fontFamily: ["Arial", "Helvetica Neue", "Roboto"].join(","),

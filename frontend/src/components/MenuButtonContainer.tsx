@@ -7,7 +7,11 @@ import LoginIcon from "@mui/icons-material/Login";
 import FolderIcon from "@mui/icons-material/Folder";
 import { useNavigate } from "react-router-dom";
 
-const MenuButtons = () => {
+type Props = {
+  playerName: string;
+};
+
+const MenuButtonContainer = ({ playerName }: Props) => {
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -54,10 +58,16 @@ const MenuButtons = () => {
   }));
   return (
     <Box className="menu-buttons__container">
-      <CreateButton variant="contained" onClick={() => navigate("/creategame")}>
+      <CreateButton
+        variant="contained"
+        onClick={() => navigate("/creategame", { state: playerName })}
+      >
         create new game session
       </CreateButton>
-      <JoinButton variant="contained" onClick={() => navigate("/joingame")}>
+      <JoinButton
+        variant="contained"
+        onClick={() => navigate("/joingame", { state: playerName })}
+      >
         join existing game session
       </JoinButton>
       <PastButton variant="contained" onClick={() => navigate("/pastgames")}>
@@ -67,4 +77,4 @@ const MenuButtons = () => {
   );
 };
 
-export default MenuButtons;
+export default MenuButtonContainer;

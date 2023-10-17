@@ -17,11 +17,15 @@ const PlayerNameInput = () => {
       className="player-name-input__container"
       onSubmit={() => navigate("/menu", { state: { playerName } })}
     >
-      <Typography className="instruction" variant="h5" gutterBottom>
+      <Typography
+        className="player-name-input__instruction"
+        variant="h5"
+        gutterBottom
+      >
         Enter your player name below:
       </Typography>
       <TextField
-        className="textinput"
+        className="player-name-input__textinput"
         required
         id="filled-required"
         label="Required"
@@ -31,7 +35,7 @@ const PlayerNameInput = () => {
         onChange={handleInput}
       />
       <Button
-        className="enter-button"
+        className="player-name-input__enter-button"
         variant="contained"
         color="secondary"
         type="submit"

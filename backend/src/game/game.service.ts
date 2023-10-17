@@ -1,7 +1,7 @@
 import { IGame } from 'interface/game.interface';
 import { CreateGameDto } from './../../dto/create-game.dto';
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { EditGameDto } from 'dto/edit-game.sto';
 
@@ -11,7 +11,9 @@ export class GameService {
 
   async createGame(createGameDto: CreateGameDto) {
     const newGame = await new this.gameModel(createGameDto);
-    return newGame.save();
+    let id = new mongoose.Types.ObjectId();
+    newGame._id = id;
+    return id;
   }
 
   async editGame(id: string, editGameDto: EditGameDto) {

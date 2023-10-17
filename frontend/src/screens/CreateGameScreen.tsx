@@ -1,9 +1,15 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import "./styles.css";
+import GameNameInput from "../components/GameNameInput";
 
 const CreateGameScreen = () => {
-  return <Box className="main"></Box>;
+  const theme = useTheme();
+  return (
+    <Box className="main" bgcolor={theme.palette.primary.main}>
+      <GameNameInput />
+    </Box>
+  );
 };
 
 export default CreateGameScreen;

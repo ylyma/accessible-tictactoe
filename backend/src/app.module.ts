@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { GameSchema } from 'schema/game.schema';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { SessionGateway } from './session/session.gateway';
 import { GameController } from './game/game.controller';
 import { GameService } from './game/game.service';
+import { SessionGateway } from './session/session.gateway';
+import { SessionModule } from './session/session.module';
 
 @Module({
   imports: [
@@ -18,8 +19,9 @@ import { GameService } from './game/game.service';
       inject: [ConfigService],
     }),
     MongooseModule.forFeature([{ name: 'Game', schema: GameSchema }]),
+    SessionModule
   ],
   controllers: [AppController, GameController],
-  providers: [AppService, GameService, SessionGateway],
+  providers: [AppService, GameService],
 })
 export class AppModule {}

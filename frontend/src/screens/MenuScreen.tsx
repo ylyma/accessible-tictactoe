@@ -1,8 +1,8 @@
 import React from "react";
-import MenuButtons from "../components/MenuButtonContainer";
 import { Box, Typography, useTheme } from "@mui/material";
 import "./styles.css";
 import { useLocation } from "react-router-dom";
+import MenuButtonContainer from "../components/MenuButtonContainer";
 
 const MenuScreen = () => {
   const theme = useTheme();
@@ -13,7 +13,7 @@ const MenuScreen = () => {
       <Typography className="title" variant="h1">
         Hi, {state.playerName}!
       </Typography>
-      <MenuButtons />
+      <MenuButtonContainer playerName={state.playerName} />
     </Box>
   );
 };

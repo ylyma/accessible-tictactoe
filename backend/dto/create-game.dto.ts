@@ -14,13 +14,14 @@ export class CreateGameDto {
 
   @IsArray()
   @IsNotEmpty()
-  readonly playersInvolved: string[];
+  playersInvolved: string[];
 
   @IsArray()
   @IsNotEmpty()
   boardState: string[][];
 
   @IsArray()
+  @IsOptional()
   moves: { action: number[]; player: string }[];
 
   @IsArray()

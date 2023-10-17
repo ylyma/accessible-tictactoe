@@ -10,9 +10,14 @@ import {
 export class EditGameDto {
   @IsArray()
   @IsNotEmpty()
+  playersInvolved: string[];
+
+  @IsArray()
+  @IsNotEmpty()
   boardState: string[][];
 
   @IsArray()
+  @IsNotEmpty()
   moves: { action: number[]; player: string }[];
 
   @IsArray()

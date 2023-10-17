@@ -1,12 +1,12 @@
-import { CreateGameDto } from './../../dto/create-game.dto';
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
 import { CreateGameDto } from 'dto/create-game.dto';
+import { GameService } from './game.service';
 
 @Controller('game')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
-  @Post()
+  @Post('/post')
   async createGame(@Res() response, @Body() createGameDto: CreateGameDto) {
     try {
       const newGame = await this.gameService.createGame(createGameDto);
@@ -23,7 +23,7 @@ export class GameController {
     }
   }
 
-  @Get()
+  @Get('/get')
   async getGames(@Res() response) {
     try {
       const games = await this.gameService.getGames();

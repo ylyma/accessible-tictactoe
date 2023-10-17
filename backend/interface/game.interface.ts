@@ -2,8 +2,10 @@ import { Document } from 'mongoose';
 
 export interface IGame extends Document {
   readonly gameName: string;
-  readonly currentPlayer: string;
   readonly playersInvolved: string[];
-  readonly boardState: string[][];
+  boardState: string[][];
+  moves: { action: number[]; player: string };
+  winner?: string[];
   finished: boolean;
+  finishedAt?: Date;
 }

@@ -1,13 +1,16 @@
-import { IsArray, IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsDate,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateGameDto {
   @IsString()
   @IsNotEmpty()
   readonly gameName: string;
-
-  @IsString()
-  @IsNotEmpty()
-  readonly currentPlayer: string;
 
   @IsArray()
   @IsNotEmpty()
@@ -15,9 +18,20 @@ export class CreateGameDto {
 
   @IsArray()
   @IsNotEmpty()
-  readonly boardState: string[][];
+  boardState: string[][];
+
+  @IsArray()
+  moves: { action: number[]; player: string }[];
+
+  @IsArray()
+  @IsOptional()
+  winner: string[];
 
   @IsBoolean()
   @IsNotEmpty()
   finished: boolean;
+
+  @IsDate()
+  @IsOptional()
+  finishedAt: Date;
 }

@@ -1,5 +1,10 @@
 {
   "singleQuote": true,
+<<<<<<< HEAD
+  "trailingComma": "all"
+}
+=======
   "trailingComma": "all",
   "endOfLine": "auto"
 }
+>>>>>>> 872842fa34f86361ecfe2fac134baa146a11c1cc

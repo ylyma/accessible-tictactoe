@@ -35,8 +35,10 @@ export class GameService {
     }
 
     createGameDto.finished = win || finished;
-    if (win && finished) {
-      createGameDto.winner = [createGameDto.currentPlayer];
+    createGameDto.finishedAt = win || finished ? new Date() : undefined;
+    if (win) {
+      const currentMove = createGameDto.moves.pop();
+      createGameDto.winner = Array(currentMove.player);
     } else if (finished) {
       createGameDto.winner = createGameDto.playersInvolved;
     }

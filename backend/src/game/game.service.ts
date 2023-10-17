@@ -3,13 +3,19 @@ import { CreateGameDto } from './../../dto/create-game.dto';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { EditGameDto } from 'dto/edit-game.sto';
 
 @Injectable()
 export class GameService {
   constructor(@InjectModel('Game') private gameModel: Model<IGame>) {}
 
   async createGame(createGameDto: CreateGameDto) {
-    const bs = createGameDto.boardState;
+    const newGame = await new this.gameModel(createGameDto);
+    return newGame.save();
+  }
+
+  async editGame(id: string, editGameDto: EditGameDto) {
+    const bs = editGameDto.boardState;
     let win = false;
     let finished = true;
     for (let i = 0; i < 3; i++) {
@@ -34,18 +40,17 @@ export class GameService {
       }
     }
 
-    createGameDto.finished = win || finished;
-    createGameDto.finishedAt = win || finished ? new Date() : undefined;
+    editGameDto.finished = win || finished;
+    editGameDto.finishedAt = win || finished ? new Date() : undefined;
     if (win) {
-      const currentMove = createGameDto.moves.pop();
-      createGameDto.winner = Array(currentMove.player);
+      const currentMove = editGameDto.moves.pop();
+      editGameDto.winner = Array(currentMove.player);
     } else if (finished) {
-      createGameDto.winner = createGameDto.playersInvolved;
+      editGameDto.winner = editGameDto.playersInvolved;
     }
 
-    const newGame = await new this.gameModel(createGameDto);
-    newGame.save();
-    return { state: win, winner: createGameDto.winner };
+    const game = await this.gameModel.findByIdAndUpdate(id, editGameDto, {new: true})
+    return { state: win, winner: editGameDto.winner };
   }
 
   async getGames() {

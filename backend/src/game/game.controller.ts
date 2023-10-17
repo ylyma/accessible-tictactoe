@@ -1,6 +1,7 @@
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
 import { CreateGameDto } from 'dto/create-game.dto';
 import { GameService } from './game.service';
+import { EditGameDto } from 'dto/edit-game.sto';
 
 @Controller('game')
 export class GameController {
@@ -23,6 +24,19 @@ export class GameController {
     }
   }
 
+  @Put('/:id')
+  async editGame(@Res() Response, @Param('id') id: string, @Body() editGameDto: EditGameDto) {
+    try {
+      const game = await this.gameService.editGame(id, editGameDto);
+      return Response.status(HttpStatus.OK).json({
+        message: 'Game update',
+        game
+      })
+    } catch (err) {
+      return Response.status(err.status).json(err.response);
+    }
+  }
+  
   @Get('/get')
   async getGames(@Res() response) {
     try {

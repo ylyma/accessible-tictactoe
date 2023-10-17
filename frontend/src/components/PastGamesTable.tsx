@@ -8,31 +8,51 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import axios from "axios";
 
 const PastGamesTable = () => {
   const [games, setGames] = useState<any>();
 
-  const getGames = async () => {
-    try {
-      const response = await fetch("http://localhost:3001/game/get", {
-        method: "GET",
-      }).then((res) => res.json());
-      console.log("getting data");
-      return response;
-    } catch (err) {
-      console.log(err);
-    }
-  };
   useEffect(() => {
-    setGames(getGames());
+    axios.get("http://localhost:3001/game/get").then((res) => {
+      setGames(res.data.games);
+    });
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>{!games ? "Loading..." : games}</p>
-      </header>
-    </div>
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Past games</TableCell>
+            <TableCell align="right">Players</TableCell>
+            <TableCell align="right">Winner</TableCell>
+            <TableCell align="right">Time started</TableCell>
+            <TableCell align="right">Time ended</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {!games
+            ? "loading"
+            : games.map((game: any) => (
+                <TableRow
+                  key={game.gameName}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {game.gameName}
+                  </TableCell>
+                  <TableCell align="right">
+                    {game.playersInvolved[0] + ", " + game.playersInvolved[1]}
+                  </TableCell>
+                  <TableCell align="right">{game.winner}</TableCell>
+                  <TableCell align="right">{game.createdAt}</TableCell>
+                  <TableCell align="right">{game.finishedAt}</TableCell>
+                </TableRow>
+              ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

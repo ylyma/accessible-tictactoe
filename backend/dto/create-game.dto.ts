@@ -1,6 +1,7 @@
 import {
   IsArray,
   IsBoolean,
+  IsDate,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -11,17 +12,16 @@ export class CreateGameDto {
   @IsNotEmpty()
   readonly gameName: string;
 
-  @IsString()
-  @IsNotEmpty()
-  readonly currentPlayer: string;
-
   @IsArray()
   @IsNotEmpty()
   readonly playersInvolved: string[];
 
   @IsArray()
   @IsNotEmpty()
-  readonly boardState: string[][];
+  boardState: string[][];
+
+  @IsArray()
+  moves: { action: number[]; player: string }[];
 
   @IsArray()
   @IsOptional()
@@ -30,4 +30,8 @@ export class CreateGameDto {
   @IsBoolean()
   @IsNotEmpty()
   finished: boolean;
+
+  @IsDate()
+  @IsOptional()
+  finishedAt: Date;
 }

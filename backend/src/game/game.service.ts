@@ -35,6 +35,7 @@ export class GameService {
     }
 
     createGameDto.finished = win || finished;
+    createGameDto.finishedAt = win || finished ? new Date() : undefined;
     if (win) {
       createGameDto.winner = Array(createGameDto.currentPlayer);
     } else if (finished) {

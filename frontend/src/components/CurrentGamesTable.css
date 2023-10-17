@@ -1,0 +1,17 @@
+.current-games__main {
+  display: flex;
+  justify-content: center;
+  padding: 30px 50px 30px;
+}
+.current-games__header {
+  background-color: bisque;
+}
+.current-games__button {
+  color: white;
+  background-color: darkgreen;
+}
+
+.current-games__button:hover {
+  color: white;
+  background-color: darkblue;
+}

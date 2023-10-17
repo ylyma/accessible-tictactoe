@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, ButtonProps, useTheme } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import "./MenuButtons.css";
+import "./MenuButtonContainer.css";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import LoginIcon from "@mui/icons-material/Login";
 import FolderIcon from "@mui/icons-material/Folder";
@@ -17,6 +17,7 @@ const MenuButtons = () => {
     marginBottom: 20,
     fontSize: 40,
     height: 100,
+    borderRadius: 10,
     transition: "transform 0.2s",
     "&:hover": {
       backgroundColor: theme.palette.secondary.dark,
@@ -30,6 +31,7 @@ const MenuButtons = () => {
     marginBottom: 20,
     fontSize: 40,
     height: 100,
+    borderRadius: 10,
     transition: "transform 0.2s",
     "&:hover": {
       backgroundColor: theme.palette.success.dark,
@@ -43,6 +45,7 @@ const MenuButtons = () => {
     marginBottom: 20,
     fontSize: 40,
     height: 100,
+    borderRadius: 10,
     transition: "transform 0.2s",
     "&:hover": {
       backgroundColor: theme.palette.warning.dark,

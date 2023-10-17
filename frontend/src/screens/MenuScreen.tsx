@@ -1,5 +1,5 @@
 import React from "react";
-import MenuButtons from "../components/MenuButtons";
+import MenuButtons from "../components/MenuButtonContainer";
 import { Box, Typography, useTheme } from "@mui/material";
 import "./styles.css";
 import { useLocation } from "react-router-dom";

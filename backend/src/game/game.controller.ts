@@ -6,7 +6,7 @@ import { GameService } from './game.service';
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
-  @Post()
+  @Post('/post')
   async createGame(@Res() response, @Body() createGameDto: CreateGameDto) {
     try {
       const newGame = await this.gameService.createGame(createGameDto);
@@ -23,7 +23,7 @@ export class GameController {
     }
   }
 
-  @Get()
+  @Get('/get')
   async getGames(@Res() response) {
     try {
       const games = await this.gameService.getGames();

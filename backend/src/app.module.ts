@@ -7,9 +7,7 @@ import { SessionGateway } from './session/session.gateway';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://ylyma:99MOWhPdCACqnasq@localhost:27017', {
-      dbName: 'gamedb',
-    }),
+    MongooseModule.forRoot('mongodb://localhost:27017'),
     MongooseModule.forFeature([{ name: 'Game', schema: GameSchema }]),
   ],
   controllers: [AppController],

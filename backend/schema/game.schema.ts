@@ -15,6 +15,9 @@ export class Game {
   boardState: string[][];
 
   @Prop()
+  winner?: string[];
+
+  @Prop()
   finished: boolean;
 }
 

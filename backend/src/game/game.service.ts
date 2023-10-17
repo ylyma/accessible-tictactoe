@@ -35,8 +35,8 @@ export class GameService {
     }
 
     createGameDto.finished = win || finished;
-    if (win && finished) {
-      createGameDto.winner = [createGameDto.currentPlayer];
+    if (win) {
+      createGameDto.winner = Array(createGameDto.currentPlayer);
     } else if (finished) {
       createGameDto.winner = createGameDto.playersInvolved;
     }

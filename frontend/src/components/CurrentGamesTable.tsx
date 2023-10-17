@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Paper,
   Table,
@@ -10,22 +10,14 @@ import {
 } from "@mui/material";
 
 const CurrentGamesContainer = () => {
-  function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number
-  ) {
-    return { name, calories, fat, carbs, protein };
-  }
-  const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
-    createData("Cupcake", 305, 3.7, 67, 4.3),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
-  ];
+  const [games, setGames] = useState<any>();
+
+  useEffect(() => {
+    fetch("/game/get")
+      .then((res) => res.json())
+      .then((data) => setGames(data));
+  }, []);
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -39,18 +31,17 @@ const CurrentGamesContainer = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {games.map((game: any) => (
             <TableRow
-              key={row.name}
+              key={game.gameName}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {game.gameName}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{game.currentPlayer}</TableCell>
+              <TableCell align="right">{game.playersInvolved}</TableCell>
+              <TableCell align="right">{game.winner}</TableCell>
             </TableRow>
           ))}
         </TableBody>

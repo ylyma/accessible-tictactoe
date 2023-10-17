@@ -1,30 +1,33 @@
 import {
     ConnectedSocket,
   MessageBody,
-  OnGatewayConnection,
-  OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
+  WsResponse,
 } from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Server } from 'socket.io';
 
-@WebSocketGateway()
-export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect {
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+})
+export class SessionGateway {
   @WebSocketServer()
   server: Server;
 
-  handleConnection(client: Socket) {
-    // Handle connection event
+    handleConnection(@ConnectedSocket() client: any) {
   }
 
-  handleDisconnect(client: Socket) {
-    // Handle disconnection event
+    handleDisconnect(@ConnectedSocket() client: any) {
   }
 
-  @SubscribeMessage('message')
-  handleMessage(@MessageBody() data: string, @ConnectedSocket() client: Socket) {
-    // Handle received message
-    this.server.emit('message', data); // Broadcast the message to all connected clients
+  @SubscribeMessage('join')
+  joinRoom(@ConnectedSocket() client: any, @MessageBody() friendName: string): void {
+    this.server.emit('friendJoined', friendName)
   }
+
 }

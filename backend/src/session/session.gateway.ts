@@ -1,5 +1,5 @@
 import {
-    ConnectedSocket,
+  ConnectedSocket,
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
@@ -19,15 +19,16 @@ export class SessionGateway {
   @WebSocketServer()
   server: Server;
 
-    handleConnection(@ConnectedSocket() client: any) {
-  }
+  handleConnection(@ConnectedSocket() client: any) {}
 
-    handleDisconnect(@ConnectedSocket() client: any) {
-  }
+  handleDisconnect(@ConnectedSocket() client: any) {}
 
   @SubscribeMessage('join')
-  joinRoom(@ConnectedSocket() client: any, @MessageBody() friendName: string): void {
-    this.server.emit('friendJoined', friendName)
+  joinRoom(
+    @ConnectedSocket() client: any,
+    @MessageBody() friendName: string,
+    @MessageBody() id: string,
+  ): void {
+    this.server.emit('friendJoined', friendName);
   }
-
 }

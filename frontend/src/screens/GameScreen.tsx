@@ -1,7 +1,12 @@
 import React from "react";
+import TicTacToe from "../components/TicTacToe";
 
 const GameScreen = () => {
-  return <div></div>;
+  return (
+    <div>
+      <TicTacToe />
+    </div>
+  );
 };
 
 export default GameScreen;

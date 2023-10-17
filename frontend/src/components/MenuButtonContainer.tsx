@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Button, ButtonProps, useTheme } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import "./MenuButtonContainer.css";
@@ -6,14 +6,12 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import LoginIcon from "@mui/icons-material/Login";
 import FolderIcon from "@mui/icons-material/Folder";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
-type Props = {
-  playerName: string;
-};
-
-const MenuButtonContainer = ({ playerName }: Props) => {
+const MenuButtonContainer = () => {
   const navigate = useNavigate();
   const theme = useTheme();
+  const playerName = useContext(UserContext);
 
   const CreateButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: theme.palette.getContrastText(theme.palette.secondary.main),
@@ -58,16 +56,10 @@ const MenuButtonContainer = ({ playerName }: Props) => {
   }));
   return (
     <Box className="menu-buttons__container">
-      <CreateButton
-        variant="contained"
-        onClick={() => navigate("/creategame", { state: playerName })}
-      >
+      <CreateButton variant="contained" onClick={() => navigate("/creategame")}>
         create new game session
       </CreateButton>
-      <JoinButton
-        variant="contained"
-        onClick={() => navigate("/joingame", { state: playerName })}
-      >
+      <JoinButton variant="contained" onClick={() => navigate("/joingame")}>
         join existing game session
       </JoinButton>
       <PastButton variant="contained" onClick={() => navigate("/pastgames")}>

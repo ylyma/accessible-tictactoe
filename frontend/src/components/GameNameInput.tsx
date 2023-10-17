@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import "./GameNameInput.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext, UserDispatchContext } from "../context/UserContext";
 
+// type Props = {
+//   playerName: string;
+// };
 const GameNameInput = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const { state } = useLocation();
   const [gameName, setGameName] = useState<string>("");
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGameName(event.target.value);
   };
-  const [uuid, setUuid] = useState<string>("");
-  const playerName = state.playerName;
+  const playerName = useContext(UserContext).playerName;
+  const setUser = useContext(UserDispatchContext);
   const handleSubmit = () => {
+    console.log(playerName);
     axios
       .post("http://localhost:3001/game/post", {
         gameName: gameName,
@@ -27,9 +31,10 @@ const GameNameInput = () => {
         finished: false,
       })
       .then((res) => {
-        setUuid(res.data.newGame);
+        setUser({ playerName: playerName, uuid: res.data.newGame._id });
+        console.log(res);
       });
-    navigate("/matching", { state: { gameName, uuid, playerName } });
+    navigate("/matching");
   };
 
   return (
@@ -57,7 +62,9 @@ const GameNameInput = () => {
         color="secondary"
         type="submit"
         sx={{ fontSize: 30 }}
-        onSubmit={handleSubmit}
+        onSubmit={() => {
+          handleSubmit();
+        }}
       >
         enter
       </Button>

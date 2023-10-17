@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import "./PlayerNameInput.css";
 import { useNavigate } from "react-router-dom";
+import { UserContext, UserDispatchContext } from "../context/UserContext";
 
 const PlayerNameInput = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const [playerName, setPlayerName] = useState<string>("");
+  const setUser = useContext(UserDispatchContext);
+  const playerName = useContext(UserContext).playerName;
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPlayerName(event.target.value);
+    setUser({ playerName: event.target.value, uuid: "" });
   };
 
   return (
     <form
       className="player-name-input__container"
-      onSubmit={() => navigate("/menu", { state: { playerName } })}
+      onSubmit={() => navigate("/menu")}
     >
       <Typography
         className="player-name-input__instruction"
@@ -40,7 +42,7 @@ const PlayerNameInput = () => {
         color="secondary"
         type="submit"
         sx={{ fontSize: 30 }}
-        onSubmit={() => navigate("/menu", { state: { playerName } })}
+        onSubmit={() => navigate("/menu")}
       >
         enter
       </Button>

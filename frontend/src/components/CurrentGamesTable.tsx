@@ -135,7 +135,7 @@ const CurrentGamesTable = ({ playerName }: Props) => {
     setPage(newPage);
   };
 
-  const [uuid, setUuid] = useState<string>();
+  // const [uuid, setUuid] = useState<string>();
 
   const navigate = useNavigate();
 
@@ -147,18 +147,19 @@ const CurrentGamesTable = ({ playerName }: Props) => {
   };
 
   const handleCellClick = (e: any) => {
-    const uuid = unfinishedGames.filter(
-      (g: any) => games.gameName == e.target.textContent
-    );
-    setUuid(uuid);
-    const socket = io("http://localhost:3001", {
-      transports: ["websocket"],
-      query: {
-        roomId: uuid,
-      },
-    });
-    socket.emit("join", playerName, uuid);
-    socket.off();
+    console.log(e.target.textContent);
+    // const uuid = unfinishedGames.filter(
+    //   (g: any) => games.gameName == e.target.textContent
+    // );
+    // setUuid(uuid);
+    // const socket = io("http://localhost:3001", {
+    //   transports: ["websocket"],
+    //   query: {
+    //     roomId: uuid,
+    //   },
+    // });
+    // socket.emit("join", playerName, uuid);
+    // socket.off();
     navigate("/tictactoe");
   };
 

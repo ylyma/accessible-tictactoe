@@ -13,6 +13,7 @@ export class GameService {
     const newGame = await new this.gameModel(createGameDto);
     let id = new mongoose.Types.ObjectId();
     newGame._id = id;
+    console.log('posted');
     return id;
   }
 
@@ -51,7 +52,9 @@ export class GameService {
       editGameDto.winner = editGameDto.playersInvolved;
     }
 
-    const game = await this.gameModel.findByIdAndUpdate(id, editGameDto, {new: true})
+    const game = await this.gameModel.findByIdAndUpdate(id, editGameDto, {
+      new: true,
+    });
     return { state: win, winner: editGameDto.winner };
   }
 

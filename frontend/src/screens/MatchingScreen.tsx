@@ -1,25 +1,27 @@
 import { Box } from "@mui/system";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { io } from "socket.io-client";
+import { UserContext } from "../context/UserContext";
 
 const MatchingScreen = () => {
-  const { state } = useLocation();
   const navigate = useNavigate();
   const [isFull, setIsFull] = useState<boolean>(false);
+  const playerName = useContext(UserContext).playerName;
+  const uuid = useContext(UserContext).uuid;
   const [friendName, setFriendName] = useState<string>("");
 
   const socket = io("http://localhost:3001", {
     transports: ["websocket"],
     query: {
-      roomId: state.uuid,
+      roomId: uuid,
     },
   });
 
   const onRoomFull = () => {
     axios.put("http://localhost:3001", {
-      playersInvolved: [state.playerName, friendName],
+      playersInvolved: [playerName, friendName],
     });
     navigate("/tictactoe");
   };

@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import MenuScreen from "./screens/MenuScreen";
 import CreateGameScreen from "./screens/CreateGameScreen";
 import JoinGameScreen from "./screens/JoinGameScreen";
+import PastGameScreen from "./screens/PastGameScreen";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/menu" element={<MenuScreen />} />
           <Route path="/creategame" element={<CreateGameScreen />} />
           <Route path="/joingame" element={<JoinGameScreen />} />
+          <Route path="/pastgames" element={<PastGameScreen />} />
         </Routes>
       </Box>
     </ThemeProvider>

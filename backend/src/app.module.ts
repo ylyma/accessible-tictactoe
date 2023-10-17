@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+<<<<<<< HEAD
 import { MongooseModule } from '@nestjs/mongoose';
 import { GameSchema } from 'schema/game.schema';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -21,5 +22,14 @@ import { GameService } from './game/game.service';
   ],
   controllers: [AppController, GameController],
   providers: [AppService, GameService, SessionGateway],
+=======
+import { GameService } from './game/game.service';
+import { GameController } from './game/game.controller';
+
+@Module({
+  imports: [],
+  controllers: [AppController, GameController],
+  providers: [AppService, GameService],
+>>>>>>> 872842fa34f86361ecfe2fac134baa146a11c1cc
 })
 export class AppModule {}

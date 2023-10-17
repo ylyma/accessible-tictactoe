@@ -21,6 +21,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+<<<<<<< HEAD
   },
   'prettier/prettier': [
     'error',
@@ -28,4 +29,13 @@ module.exports = {
       endOfLine: 'auto',
     },
   ],
+=======
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
+  },
+>>>>>>> 872842fa34f86361ecfe2fac134baa146a11c1cc
 };

@@ -1,11 +1,14 @@
-import { Box } from "@mui/material";
-import React from "react";
+import { Box, useTheme } from "@mui/material";
+import React, { useContext } from "react";
 import PastGamesTable from "../components/PastGamesTable";
+import { UserContext } from "../context/UserContext";
 
 const PastGameScreen = () => {
+  const theme = useTheme();
+  const playerName = useContext(UserContext).playerName;
   return (
-    <Box>
-      <PastGamesTable />
+    <Box className="main" bgcolor={theme.palette.secondary.dark}>
+      <PastGamesTable playerName={playerName} />
     </Box>
   );
 };

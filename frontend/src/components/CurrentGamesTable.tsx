@@ -166,8 +166,9 @@ const CurrentGamesTable = ({ playerName }: Props) => {
   const CellButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: theme.palette.getContrastText(theme.palette.success.main),
     backgroundColor: theme.palette.success.main,
-    fontSize: 20,
+    fontSize: 40,
     borderRadius: 10,
+    padding: 10,
     transition: "transform 0.2s",
     "&:hover": {
       backgroundColor: theme.palette.success.dark,
@@ -181,11 +182,11 @@ const CurrentGamesTable = ({ playerName }: Props) => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead className="current-games__header">
             <TableRow>
-              <TableCell sx={{ fontSize: 20 }}>Current games</TableCell>
-              <TableCell sx={{ fontSize: 20 }} align="right">
+              <TableCell sx={{ fontSize: 40 }}>Current games</TableCell>
+              <TableCell sx={{ fontSize: 40 }} align="right">
                 Players
               </TableCell>
-              <TableCell sx={{ fontSize: 20 }} align="right">
+              <TableCell sx={{ fontSize: 40 }} align="right">
                 Time started
               </TableCell>
             </TableRow>
@@ -203,14 +204,18 @@ const CurrentGamesTable = ({ playerName }: Props) => {
                         {game.gameName}
                       </CellButton>
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell sx={{ fontSize: 30 }} align="right">
                       {game.playersInvolved.length == 2
                         ? game.playersInvolved[0] +
                           ", " +
                           game.playersInvolved[1]
                         : game.playersInvolved[0]}
                     </TableCell>
-                    <TableCell align="right">{game.createdAt}</TableCell>
+                    <TableCell sx={{ fontSize: 30 }} align="right">
+                      {new Date(game.createdAt).toLocaleString("en-US", {
+                        timeZone: "Asia/Shanghai",
+                      })}
+                    </TableCell>
                   </TableRow>
                 ))}
           </TableBody>

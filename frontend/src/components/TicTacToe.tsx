@@ -1,5 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import "./TicTacToe.css";
+import GameBoard from "./GameBoard";
 
 const Square = (props: { value: ReactNode; onClick: () => void }) => (
   <button className="ttt__square" onClick={props.onClick}>
@@ -33,12 +34,12 @@ const TicTacToe = () => {
   };
 
   return (
-    <>
+    <div className="ttt__main">
       <Board squares={board} onClick={handleClick} />
       <div>
         <p>hi</p>
       </div>
-    </>
+    </div>
   );
 };
 

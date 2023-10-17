@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { io } from "socket.io-client";
 import { UserContext } from "../context/UserContext";
+import { CircularProgress } from "@mui/material/";
 
 const MatchingScreen = () => {
   const navigate = useNavigate();
@@ -37,7 +38,14 @@ const MatchingScreen = () => {
     };
   }, [socket]);
 
-  return <Box></Box>;
+  return (
+    <div>
+      <p className="matching__text">FINDING PLAYERS...</p>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <CircularProgress color="success" />
+      </Box>
+    </div>
+  );
 };
 
 export default MatchingScreen;

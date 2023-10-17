@@ -11,6 +11,7 @@ import PastGameScreen from "./screens/PastGameScreen";
 import MatchingScreen from "./screens/MatchingScreen";
 import GameScreen from "./screens/GameScreen";
 import { UserContext, UserDispatchContext } from "./context/UserContext";
+import PastGameDetailScreen from "./screens/PastGameDetailScreen";
 
 function App() {
   const [playerName, setPlayerName] = useState<string>("");
@@ -28,6 +29,10 @@ function App() {
               <Route path="/pastgames" element={<PastGameScreen />} />
               <Route path="/matching" element={<MatchingScreen />} />
               <Route path="/tictactoe" element={<GameScreen />} />
+              <Route
+                path="/pastgamedetail"
+                element={<PastGameDetailScreen />}
+              />
             </Routes>
           </Box>
         </UserDispatchContext.Provider>

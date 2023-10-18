@@ -17,9 +17,7 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 import axios from "axios";
 import { Button, ButtonProps, TableHead } from "@mui/material";
 import "./CurrentGamesTable.css";
-import { io } from "socket.io-client";
 import { useNavigate, useNavigation } from "react-router";
-import Config from "react-native-config";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -109,7 +107,7 @@ const PastGamesTable = ({ playerName }: Props) => {
   const [games, setGames] = useState<any>();
 
   useEffect(() => {
-    axios.get(`${Config.API_URL}/game/get`).then((res) => {
+    axios.get(`${process.env.API_URL}/game/get`).then((res) => {
       setGames(res.data.games);
     });
   }, []);
@@ -130,8 +128,6 @@ const PastGamesTable = ({ playerName }: Props) => {
     setPage(newPage);
   };
 
-  // const [uuid, setUuid] = useState<string>();
-
   const navigate = useNavigate();
 
   const handleChangeRowsPerPage = (
@@ -142,19 +138,6 @@ const PastGamesTable = ({ playerName }: Props) => {
   };
 
   const handleCellClick = (e: any) => {
-    console.log(e.target.textContent);
-    // const uuid = unfinishedGames.filter(
-    //   (g: any) => games.gameName == e.target.textContent
-    // );
-    // setUuid(uuid);
-    // const socket = io("http://localhost:3001", {
-    //   transports: ["websocket"],
-    //   query: {
-    //     roomId: uuid,
-    //   },
-    // });
-    // socket.emit("join", playerName, uuid);
-    // socket.off();
     navigate("/pastgamedetail");
   };
 

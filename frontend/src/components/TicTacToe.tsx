@@ -3,7 +3,6 @@ import "./TicTacToe.css";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import { io } from "socket.io-client";
-import Config from "react-native-config";
 
 const Square = (props: {
   disabled: boolean;
@@ -57,7 +56,7 @@ const TicTacToe = () => {
 
   const updateBoard = () => {
     axios
-      .put(`${Config.API_URL}/game/${uuid}/${playerName}`, {
+      .put(`${process.env.API_URL}/game/${uuid}/${playerName}`, {
         boardState: boardState,
         finished: false,
       })

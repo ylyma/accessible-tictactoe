@@ -4,7 +4,6 @@ import "./GameNameInput.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext, UserDispatchContext } from "../context/UserContext";
-import Config from "react-native-config";
 
 const GameNameInput = () => {
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ const GameNameInput = () => {
 
   const handleSubmit = () => {
     axios
-      .post(`${Config.API_URL}game/post`, {
+      .post(`${process.env.API_URL}game/post`, {
         gameName: gameName,
         playersInvolved: [playerName],
         boardState: [

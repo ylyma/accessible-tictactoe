@@ -7,6 +7,10 @@ import {
   IsString,
 } from 'class-validator';
 
+type Move = {
+  action: string[][];
+  player: string;
+};
 export class CreateGameDto {
   @IsString()
   @IsNotEmpty()
@@ -22,7 +26,7 @@ export class CreateGameDto {
 
   @IsArray()
   @IsOptional()
-  moves: { action: string[][]; player: string }[];
+  moves: Move[];
 
   @IsArray()
   @IsOptional()

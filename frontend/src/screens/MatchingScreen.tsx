@@ -8,41 +8,33 @@ import { CircularProgress } from "@mui/material/";
 
 const MatchingScreen = () => {
   const navigate = useNavigate();
-  const [isFull, setIsFull] = useState<boolean>(false);
   const playerName = useContext(UserContext).playerName;
   const uuid = useContext(UserContext).uuid;
-  const [friendName, setFriendName] = useState<string>("");
 
   const socket = io("http://localhost:3001", {
     transports: ["websocket"],
-    query: {
-      roomId: uuid,
-    },
   });
 
-  const joinRoom = () => {
-    socket.emit("join", { friendName: playerName, roomId: uuid });
-  };
-  const onRoomFull = () => {
-    axios.put(`http://localhost:3001/${uuid}/${playerName}`, {
+  socket.on("friendJoined", (friendName) => {
+    axios.put(`http://localhost:3001/game/${uuid}/${playerName}`, {
       playersInvolved: [playerName, friendName],
+      boardState: [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""],
+      ],
       finished: false,
     });
     navigate("/tictactoe");
-  };
+  });
 
   useEffect(() => {
-    joinRoom();
-    socket.on("friendJoined", (friendName) => {
-      setIsFull(true);
-      setFriendName(friendName);
-      onRoomFull();
-    });
-    return function cleanup() {
-      socket.off();
-    };
-  }, []);
+    socket.emit("matching", uuid);
 
+    // return function cleanup() {
+    //   socket.off("friendJoined");
+    // };
+  });
   return (
     <div>
       <p className="matching__text">FINDING PLAYERS...</p>

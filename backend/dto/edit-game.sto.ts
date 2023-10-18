@@ -7,9 +7,13 @@ import {
   IsString,
 } from 'class-validator';
 
+type Move = {
+  action: string[][];
+  player: string;
+};
 export class EditGameDto {
   @IsArray()
-  @IsNotEmpty()
+  @IsOptional()
   playersInvolved: string[];
 
   @IsArray()
@@ -18,7 +22,7 @@ export class EditGameDto {
 
   @IsString()
   @IsOptional()
-  moves: { action: string[][]; player: string }[];
+  moves: Move[];
 
   @IsArray()
   @IsOptional()

@@ -13,7 +13,6 @@ export class GameService {
     const newGame = await new this.gameModel(createGameDto);
     let id = new mongoose.Types.ObjectId();
     newGame._id = id;
-    console.log('posted');
     newGame.save();
     return id;
   }
@@ -43,21 +42,20 @@ export class GameService {
         }
       }
     }
-
     editGameDto.finished = win || finished;
     editGameDto.finishedAt = win || finished ? new Date() : undefined;
     const newMove = { action: editGameDto.boardState, player: player };
-    editGameDto.moves.push(newMove);
+    const currMoves = await this.gameModel.findById(id);
+    currMoves.moves.push(newMove);
     if (win) {
-      const currentMove = editGameDto.moves.pop();
-      editGameDto.winner = Array(currentMove.player);
+      editGameDto.winner = Array(player);
     } else if (finished) {
-      editGameDto.winner = editGameDto.playersInvolved;
+      editGameDto.winner = (await this.gameModel.findById(id)).playersInvolved;
     }
-
     const game = await this.gameModel.findByIdAndUpdate(id, editGameDto, {
       new: true,
     });
+
     return { state: win, winner: editGameDto.winner };
   }
 

@@ -133,17 +133,11 @@ const CurrentGamesTable = () => {
     setPage(newPage);
   };
 
-  const [roomId, setRoomId] = useState<string>();
-
   const navigate = useNavigate();
   const setUser = useContext(UserDispatchContext);
 
   const socket = io("http://localhost:3001", {
     transports: ["websocket"],
-    autoConnect: false,
-    query: {
-      roomId: roomId,
-    },
   });
 
   const handleChangeRowsPerPage = (
@@ -153,25 +147,17 @@ const CurrentGamesTable = () => {
     setPage(0);
   };
 
-  const joinRoom = () => {
-    socket.emit("join", { friendName: playerName, roomId: roomId });
-  };
-
-  const connectSocket = () => {
-    socket.connect();
-  };
-
   const handleCellClick = (e: any) => {
-    console.log(e.target.value);
+    console.log(playerName);
     const uuid = e.target.value;
-    setRoomId(uuid);
+    console.log(uuid);
     setUser({
       playerName: playerName,
-      uuid: roomId ? roomId : "",
+      uuid: uuid ? uuid : "",
       symbol: "O",
     });
-    connectSocket();
-    joinRoom();
+    socket.connect();
+    socket.emit("join", { friendName: playerName, roomId: uuid });
 
     navigate("/tictactoe");
   };
@@ -218,7 +204,7 @@ const CurrentGamesTable = () => {
                       </CellButton>
                     </TableCell>
                     <TableCell sx={{ fontSize: 30 }} align="right">
-                      {game.playersInvolved.length == 2
+                      {game.playersInvolved.length === 2
                         ? game.playersInvolved[0] +
                           ", " +
                           game.playersInvolved[1]

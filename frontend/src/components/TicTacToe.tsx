@@ -15,11 +15,14 @@ const Board = (props: {
   onClick: (i: number) => void;
 }) => (
   <div className="ttt__board">
-    {props.squares.map((squares) =>
-      squares.map((square: string, i: number) => (
-        <Square key={i} value={square} onClick={() => props.onClick(i)} />
-      ))
-    )}
+    {props.squares.map((rows: string[], r: number) => {
+      return rows.map((col: string, c: number) => {
+        const idx = 3 * r + c;
+        return (
+          <Square key={idx} value={col} onClick={() => props.onClick(idx)} />
+        );
+      });
+    })}
   </div>
 );
 
@@ -32,46 +35,39 @@ const TicTacToe = () => {
   const uuid = useContext(UserContext).uuid;
   const playerName = useContext(UserContext).playerName;
   const symbol = useContext(UserContext).symbol;
+
   const updateBoard = () => {
-    axios.put(`http://localhost:3001/${uuid}/${playerName}`, {
+    axios.put(`http://localhost:3001/game/${uuid}/${playerName}`, {
       boardState: boardState,
+      finished: false,
     });
   };
   const socket = io("http://localhost:3001", {
     transports: ["websocket"],
-    query: {
-      roomId: uuid,
-    },
-  });
-
-  const joinRoom = () => {
-    socket.emit("join", { friendName: playerName, roomId: uuid });
-  };
-
-  useEffect(() => {
-    joinRoom();
   });
 
   const handleClick = (i: string | number) => {
     const index = typeof i == "string" ? parseInt(i) : i;
-    const row = index % 3;
-    const col = Math.floor(index / 3);
+    const col = index % 3;
+    const row = Math.floor(index / 3);
     const newBoardState = [...boardState];
     if (boardState[row][col] !== "") return;
     newBoardState[row][col] = symbol;
     setBoardState(newBoardState);
-
     socket.emit("move", {
-      boardState: boardState,
+      boardState: newBoardState,
       roomId: uuid,
     });
-    updateBoard();
+    // updateBoard();
   };
 
+  socket.on("moved", (boardState) => {
+    console.log(boardState);
+    setBoardState(boardState);
+  });
+
   useEffect(() => {
-    socket.on("move", (boardState) => {
-      setBoardState(boardState);
-    });
+    socket.emit("matching", uuid);
   });
 
   return (

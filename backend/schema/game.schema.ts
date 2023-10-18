@@ -1,5 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
+type Move = {
+  action: string[][];
+  player: string;
+};
 @Schema({ timestamps: true })
 export class Game {
   @Prop()
@@ -12,7 +16,7 @@ export class Game {
   boardState: string[][];
 
   @Prop()
-  moves: { action: string[][]; player: string }[];
+  moves: Move[];
 
   @Prop()
   winner?: string[];

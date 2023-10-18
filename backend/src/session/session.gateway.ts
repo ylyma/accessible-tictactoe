@@ -34,6 +34,14 @@ export class SessionGateway {
       .emit('friendJoined', joinSessionDto.friendName);
   }
 
+  @SubscribeMessage('matching')
+  matchRoom(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() roomId: string,
+  ): void {
+    client.join(roomId);
+  }
+
   @SubscribeMessage('move')
   move(
     @ConnectedSocket() client: Socket,
@@ -41,6 +49,6 @@ export class SessionGateway {
   ) {
     this.server
       .to(makeMoveSessionDto.roomId)
-      .emit('move', makeMoveSessionDto.boardState);
+      .emit('moved', makeMoveSessionDto.boardState);
   }
 }

@@ -4,13 +4,10 @@ import "./GameNameInput.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext, UserDispatchContext } from "../context/UserContext";
-import { io } from "socket.io-client";
 
 const GameNameInput = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const [gameName, setGameName] = useState<string>("");
-  const uuid = useContext(UserContext).uuid;
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGameName(event.target.value);
   };
@@ -28,6 +25,7 @@ const GameNameInput = () => {
           ["", "", ""],
           ["", "", ""],
         ],
+        moves: [],
         finished: false,
       })
       .then((res) => {
@@ -36,7 +34,7 @@ const GameNameInput = () => {
           uuid: res.data.newGame,
           symbol: "X",
         });
-        console.log(res);
+        console.log(res.data.newGame);
       });
     navigate("/matching");
   };

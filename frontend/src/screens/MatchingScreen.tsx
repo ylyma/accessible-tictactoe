@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router";
 import { io } from "socket.io-client";
 import { UserContext } from "../context/UserContext";
 import { CircularProgress } from "@mui/material/";
+import Config from "react-native-config";
 
 const MatchingScreen = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const MatchingScreen = () => {
   });
 
   socket.on("friendJoined", (friendName) => {
-    axios.put(`http://localhost:3001/game/${uuid}/${playerName}`, {
+    axios.put(`${Config.API_URL}/game/${uuid}/${playerName}`, {
       playersInvolved: [playerName, friendName],
       boardState: [
         ["", "", ""],

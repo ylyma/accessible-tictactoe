@@ -4,6 +4,7 @@ import "./GameNameInput.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext, UserDispatchContext } from "../context/UserContext";
+import Config from "react-native-config";
 
 const GameNameInput = () => {
   const navigate = useNavigate();
@@ -15,9 +16,8 @@ const GameNameInput = () => {
   const setUser = useContext(UserDispatchContext);
 
   const handleSubmit = () => {
-    console.log(playerName);
     axios
-      .post("http://localhost:3001/game/post", {
+      .post(`${Config.API_URL}game/post`, {
         gameName: gameName,
         playersInvolved: [playerName],
         boardState: [
@@ -34,7 +34,6 @@ const GameNameInput = () => {
           uuid: res.data.newGame,
           symbol: "X",
         });
-        console.log(res.data.newGame);
       });
     navigate("/matching");
   };

@@ -19,6 +19,7 @@ import { Button, ButtonProps, TableHead } from "@mui/material";
 import "./CurrentGamesTable.css";
 import { io } from "socket.io-client";
 import { useNavigate, useNavigation } from "react-router";
+import Config from "react-native-config";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -108,7 +109,7 @@ const PastGamesTable = ({ playerName }: Props) => {
   const [games, setGames] = useState<any>();
 
   useEffect(() => {
-    axios.get("http://localhost:3001/game/get").then((res) => {
+    axios.get(`${Config.API_URL}/game/get`).then((res) => {
       setGames(res.data.games);
     });
   }, []);

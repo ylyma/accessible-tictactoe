@@ -20,6 +20,7 @@ import "./CurrentGamesTable.css";
 import { io } from "socket.io-client";
 import { useNavigate, useNavigation } from "react-router";
 import { UserContext, UserDispatchContext } from "../context/UserContext";
+import Config from "react-native-config";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -106,7 +107,7 @@ const CurrentGamesTable = () => {
   const playerName = useContext(UserContext).playerName;
 
   useEffect(() => {
-    axios.get("http://localhost:3001/game/get").then((res) => {
+    axios.get(`${Config.API_URL}/game/get`).then((res) => {
       setGames(res.data.games);
     });
   }, []);

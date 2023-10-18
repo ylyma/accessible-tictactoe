@@ -13,6 +13,7 @@ const MatchingScreen = () => {
 
   const socket = io("http://localhost:3001", {
     transports: ["websocket"],
+    autoConnect: false,
   });
 
   socket.on("friendJoined", (friendName) => {
@@ -30,11 +31,7 @@ const MatchingScreen = () => {
 
   useEffect(() => {
     socket.emit("matching", uuid);
-
-    // return function cleanup() {
-    //   socket.off("friendJoined");
-    // };
-  });
+  }, []);
   return (
     <div>
       <p className="matching__text">FINDING PLAYERS...</p>

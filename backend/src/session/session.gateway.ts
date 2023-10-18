@@ -6,6 +6,7 @@ import {
   WebSocketServer,
   WsResponse,
 } from '@nestjs/websockets';
+import { JoinSessionDto } from 'dto/join-session.dto';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Server } from 'socket.io';
@@ -26,9 +27,9 @@ export class SessionGateway {
   @SubscribeMessage('join')
   joinRoom(
     @ConnectedSocket() client: any,
-    @MessageBody() friendName: string,
-    @MessageBody() id: string,
+    @MessageBody() joinSessionDto: JoinSessionDto,
   ): void {
-    this.server.emit('friendJoined', friendName);
+    this.server.emit('friendJoined', joinSessionDto.friendName);
+    client.join(joinSessionDto.roomId);
   }
 }

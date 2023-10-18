@@ -135,9 +135,17 @@ const CurrentGamesTable = ({ playerName }: Props) => {
     setPage(newPage);
   };
 
-  // const [uuid, setUuid] = useState<string>();
+  const [roomId, setRoomId] = useState<string>();
 
   const navigate = useNavigate();
+
+  const socket = io("http://localhost:3001", {
+    transports: ["websocket"],
+    autoConnect: false,
+    query: {
+      roomId: roomId,
+    },
+  });
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -146,20 +154,21 @@ const CurrentGamesTable = ({ playerName }: Props) => {
     setPage(0);
   };
 
+  const joinRoom = () => {
+    socket.emit("join", { friendName: playerName, roomId: roomId });
+  };
+
+  const connectSocket = () => {
+    socket.connect();
+  };
+
   const handleCellClick = (e: any) => {
-    console.log(e.target.textContent);
-    // const uuid = unfinishedGames.filter(
-    //   (g: any) => games.gameName == e.target.textContent
-    // );
-    // setUuid(uuid);
-    // const socket = io("http://localhost:3001", {
-    //   transports: ["websocket"],
-    //   query: {
-    //     roomId: uuid,
-    //   },
-    // });
-    // socket.emit("join", playerName, uuid);
-    // socket.off();
+    console.log(e.target.value);
+    const uuid = e.target.value;
+    setRoomId(uuid);
+    connectSocket();
+    joinRoom();
+
     navigate("/tictactoe");
   };
 
@@ -196,11 +205,11 @@ const CurrentGamesTable = ({ playerName }: Props) => {
               ? "loading"
               : unfinishedGames.map((game: any) => (
                   <TableRow
-                    key={game.gameName}
+                    key={game._id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      <CellButton onClick={handleCellClick}>
+                      <CellButton value={game._id} onClick={handleCellClick}>
                         {game.gameName}
                       </CellButton>
                     </TableCell>

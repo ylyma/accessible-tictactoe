@@ -11,7 +11,7 @@ const MatchingScreen = () => {
   const playerName = useContext(UserContext).playerName;
   const uuid = useContext(UserContext).uuid;
 
-  const socket = io("http://localhost:3001", {
+  const socket = io(`${process.env.REACT_APP_API_URL}`, {
     transports: ["websocket"],
     autoConnect: false,
   });

@@ -14,6 +14,7 @@ export class GameService {
     let id = new mongoose.Types.ObjectId();
     newGame._id = id;
     console.log('posted');
+    newGame.save();
     return id;
   }
 

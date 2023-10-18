@@ -21,7 +21,7 @@ const MatchingScreen = () => {
   });
 
   const onRoomFull = () => {
-    axios.put("http://localhost:3001", {
+    axios.put(`http://localhost:3001/${uuid}`, {
       playersInvolved: [playerName, friendName],
     });
     navigate("/tictactoe");
@@ -34,9 +34,9 @@ const MatchingScreen = () => {
       onRoomFull();
     });
     return function cleanup() {
-      socket.off("msg2");
+      socket.off();
     };
-  }, [socket]);
+  }, []);
 
   return (
     <div>

@@ -2,16 +2,11 @@ import React, { useContext } from "react";
 import { Box, Button, ButtonProps, useTheme } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import "./MenuButtonContainer.css";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import LoginIcon from "@mui/icons-material/Login";
-import FolderIcon from "@mui/icons-material/Folder";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
 
 const MenuButtonContainer = () => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const playerName = useContext(UserContext);
 
   const CreateButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: theme.palette.getContrastText(theme.palette.secondary.main),

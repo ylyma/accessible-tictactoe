@@ -1,22 +1,33 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import "./GameNameInput.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext, UserDispatchContext } from "../context/UserContext";
+import { io } from "socket.io-client";
 
-// type Props = {
-//   playerName: string;
-// };
 const GameNameInput = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const [gameName, setGameName] = useState<string>("");
+  const uuid = useContext(UserContext).uuid;
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGameName(event.target.value);
   };
   const playerName = useContext(UserContext).playerName;
   const setUser = useContext(UserDispatchContext);
+
+  const socket = io("http://localhost:3001", {
+    transports: ["websocket"],
+    autoConnect: false,
+    query: {
+      roomId: uuid,
+    },
+  });
+
+  const createRoom = () => {
+    socket.emit("join", { friendName: playerName, roomId: uuid });
+  };
   const handleSubmit = () => {
     console.log(playerName);
     axios
@@ -34,6 +45,7 @@ const GameNameInput = () => {
         setUser({ playerName: playerName, uuid: res.data.newGame._id });
         console.log(res);
       });
+    createRoom();
     navigate("/matching");
   };
 

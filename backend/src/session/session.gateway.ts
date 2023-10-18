@@ -28,8 +28,10 @@ export class SessionGateway {
     @ConnectedSocket() client: Socket,
     @MessageBody() joinSessionDto: JoinSessionDto,
   ): void {
+    this.server
+      .to(joinSessionDto.roomId)
+      .emit('friendJoined', joinSessionDto.friendName);
     client.join(joinSessionDto.roomId);
-    this.server.emit('friendJoined', joinSessionDto.friendName);
   }
 
   @SubscribeMessage('move')

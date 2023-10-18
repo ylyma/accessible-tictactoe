@@ -16,20 +16,20 @@ This is an accessible tictactoe web application, designed to be as inclusive as 
 
 1. `cd` into frontend subfolder with `cd frontend`.
 
-2. Add a `.env` file into the frontend folder. Add the following line:
+2. Change the name of the `.env.sample` file into `.env`. Replace INSERT_URL_HERE as follows:
 
 ```
-DB_LOCAL_URI: http://localhost:27017
+DB_LOCAL_URI=http://localhost:27017
 ```
 
 3. Run `npm start`. This will open a `http://localhost:3000` window on your browser.
 
 4. `cd` into backend subfoler with `cd backend`.
 
-5. Add a `.env` file into the backend folder. Add the following line:
+5. Change the name of the `.env.sample` file into `.env`. Replace INSERT_URL_HERE as follows:
 
 ```
-DB_LOCAL_URI: http://localhost:27017
+DB_LOCAL_URI=http://localhost:3000
 ```
 
 5. Run `npm run start`. This starts the local database.
@@ -48,7 +48,7 @@ The website was designed with accessibility in mind. Hence, I made sure colours 
 
 ### Future plans
 
-Due to the short time restraints on this project, I was not able to fully implement all the design ideas I had. Some features I hope to include to aid accessibility are:
+Due to the tight time restraints on this project, I was not able to fully implement all the design ideas I had. Some features I hope to include to aid accessibility are:
 
 1. The ability to navigate through the app with just the keyboard.
 
@@ -77,9 +77,9 @@ https://tictactoe-backend-ylyma-3375319d8e14.herokuapp.com/game/get
 3. Put
 
 ```
-https://tictactoe-backend-ylyma-3375319d8e14.herokuapp.com/game/get
+https://tictactoe-backend-ylyma-3375319d8e14.herokuapp.com/game/put
 ```
 
-![alt text](./assets/get.jpg)
+![alt text](./assets/put.jpg)
 
 ### Websockets

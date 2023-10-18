@@ -3,7 +3,7 @@ import "./TicTacToe.css";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import { io } from "socket.io-client";
-import { Button } from "@mui/material";
+import { Button, ButtonProps, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Square = (props: {
@@ -41,6 +41,20 @@ const Board = (props: {
     })}
   </div>
 );
+
+const HomeButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  color: theme.palette.getContrastText(theme.palette.warning.main),
+  backgroundColor: theme.palette.warning.main,
+  marginBottom: 20,
+  fontSize: 40,
+  height: 100,
+  borderRadius: 10,
+  transition: "transform 0.2s",
+  "&:hover": {
+    backgroundColor: theme.palette.warning.dark,
+    transform: "translate(0px, -8%)",
+  },
+}));
 
 const TicTacToe = () => {
   const [boardState, setBoardState] = useState<string[][]>(
@@ -129,7 +143,7 @@ const TicTacToe = () => {
       <div>
         <p className="ttt__msg">{message}</p>
       </div>
-      <Button onClick={() => navigate("/")}>Go Home</Button>
+      <HomeButton onClick={() => navigate("/")}>Go Home</HomeButton>
     </div>
   );
 };

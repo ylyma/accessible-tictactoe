@@ -19,3 +19,9 @@
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
 }
+
+.ttt__msg {
+  font-size: 50px;
+  font-weight: 500;
+  margin: 50px;
+}

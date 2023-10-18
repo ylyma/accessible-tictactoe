@@ -4,13 +4,22 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-const Square = (props: { value: ReactNode; onClick: () => void }) => (
-  <button className="ttt__square" onClick={props.onClick}>
+const Square = (props: {
+  disabled: boolean;
+  value: ReactNode;
+  onClick: () => void;
+}) => (
+  <button
+    disabled={props.disabled}
+    className="ttt__square"
+    onClick={props.onClick}
+  >
     {props.value}
   </button>
 );
 
 const Board = (props: {
+  disabled: boolean;
   squares: string[][];
   onClick: (i: number) => void;
 }) => (
@@ -19,7 +28,12 @@ const Board = (props: {
       return rows.map((col: string, c: number) => {
         const idx = 3 * r + c;
         return (
-          <Square key={idx} value={col} onClick={() => props.onClick(idx)} />
+          <Square
+            disabled={props.disabled}
+            key={idx}
+            value={col}
+            onClick={() => props.onClick(idx)}
+          />
         );
       });
     })}
@@ -35,12 +49,24 @@ const TicTacToe = () => {
   const uuid = useContext(UserContext).uuid;
   const playerName = useContext(UserContext).playerName;
   const symbol = useContext(UserContext).symbol;
+  const [message, setMessage] = useState<string>("");
+  const [disabled, setDisabled] = useState<boolean>(false);
+  const [win, setWin] = useState<boolean>(false);
+  const [winner, setWinner] = useState<string>("");
 
   const updateBoard = () => {
-    axios.put(`http://localhost:3001/game/${uuid}/${playerName}`, {
-      boardState: boardState,
-      finished: false,
-    });
+    axios
+      .put(`http://localhost:3001/game/${uuid}/${playerName}`, {
+        boardState: boardState,
+        finished: false,
+      })
+      .then((res) => {
+        console.log(res.data.game.state);
+        if (res.data.game.state) {
+          setWin(true);
+          setWinner(res.data.game.winner);
+        }
+      });
   };
   const socket = io("http://localhost:3001", {
     transports: ["websocket"],
@@ -57,24 +83,48 @@ const TicTacToe = () => {
     socket.emit("move", {
       boardState: newBoardState,
       roomId: uuid,
+      player: playerName,
     });
-    // updateBoard();
+    updateBoard();
+    setDisabled(true);
+    setMessage("Please wait for opponent's move!");
   };
 
-  socket.on("moved", (boardState) => {
-    console.log(boardState);
-    setBoardState(boardState);
-  });
-
   useEffect(() => {
+    socket.on("moved", (boardState, player) => {
+      console.log(boardState);
+      setBoardState(boardState);
+      if (player !== playerName) {
+        setDisabled(false);
+        setMessage("Your turn!");
+      }
+    });
+
+    socket.on("game over", (winner) => {
+      setDisabled(true);
+      if (winner == playerName) {
+        setMessage("You win!");
+      } else {
+        setMessage("You lose!");
+      }
+
+      console.log("print");
+    });
     socket.emit("matching", uuid);
-  });
+    if (win) {
+      socket.emit("win", { roomId: uuid, winner: playerName });
+      console.log("game over");
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, [win]);
 
   return (
     <div className="ttt__main">
-      <Board squares={boardState} onClick={handleClick} />
+      <Board disabled={disabled} squares={boardState} onClick={handleClick} />
       <div>
-        <p>hi</p>
+        <p className="ttt__msg">{message}</p>
       </div>
     </div>
   );

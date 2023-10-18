@@ -7,7 +7,8 @@ import {
   WsResponse,
 } from '@nestjs/websockets';
 import { JoinSessionDto } from 'dto/join-session.dto';
-import { makeMoveSessionDto } from 'dto/make-move-session.dt';
+import { MakeMoveSessionDto } from 'dto/make-move-session.dt';
+import { WinGameSessionDto } from 'dto/win-game-session.dto';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
@@ -45,10 +46,19 @@ export class SessionGateway {
   @SubscribeMessage('move')
   move(
     @ConnectedSocket() client: Socket,
-    @MessageBody() makeMoveSessionDto: makeMoveSessionDto,
+    @MessageBody() makeMoveSessionDto: MakeMoveSessionDto,
   ) {
     this.server
       .to(makeMoveSessionDto.roomId)
-      .emit('moved', makeMoveSessionDto.boardState);
+      .emit('moved', makeMoveSessionDto.boardState, makeMoveSessionDto.player);
+  }
+  @SubscribeMessage('win')
+  win(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() winGameSessionDto: WinGameSessionDto,
+  ) {
+    this.server
+      .to(winGameSessionDto.roomId)
+      .emit('game over', winGameSessionDto.winner);
   }
 }

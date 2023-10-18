@@ -22,18 +22,38 @@ export class GameService {
     let win = false;
     let finished = true;
     for (let i = 0; i < 3; i++) {
+      // if (
+      //   bs[i][0] == '' ||
+      //   bs[i][1] == '' ||
+      //   bs[i][2] == '' ||
+      //   bs[0][i] == '' ||
+      //   bs[1][i] == '' ||
+      //   bs[2][i] == ''
+      // ) {
+      //   continue
+      // }
       if (bs[i][0] == bs[i][1] && bs[i][1] == bs[i][2]) {
+        if (bs[i][0] == '' || bs[i][1] == '' || bs[i][2] == '') {
+          continue;
+        }
         win = true;
       }
       if (bs[0][i] == bs[1][i] && bs[1][i] == bs[2][i]) {
+        if (bs[0][i] == '' || bs[1][i] == '' || bs[2][i] == '') {
+          continue;
+        }
         win = true;
       }
     }
     if (bs[0][0] == bs[1][1] && bs[1][1] == bs[2][2]) {
-      win = true;
+      if (bs[0][0] !== '') {
+        win = true;
+      }
     }
     if (bs[2][0] == bs[1][1] && bs[1][1] == bs[0][2]) {
-      win = true;
+      if (bs[2][0] !== '') {
+        win = true;
+      }
     }
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {

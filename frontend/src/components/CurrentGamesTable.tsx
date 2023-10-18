@@ -136,7 +136,7 @@ const CurrentGamesTable = () => {
   const navigate = useNavigate();
   const setUser = useContext(UserDispatchContext);
 
-  const socket = io("http://localhost:3001", {
+  const socket = io(`${process.env.REACT_APP_API_URL}`, {
     transports: ["websocket"],
   });
 

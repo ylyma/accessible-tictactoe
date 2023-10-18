@@ -13,7 +13,6 @@ const MatchingScreen = () => {
 
   const socket = io(`${process.env.REACT_APP_API_URL}`, {
     transports: ["websocket"],
-    autoConnect: false,
   });
 
   socket.on("friendJoined", (friendName) => {

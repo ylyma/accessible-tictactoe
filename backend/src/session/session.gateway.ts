@@ -7,9 +7,8 @@ import {
   WsResponse,
 } from '@nestjs/websockets';
 import { JoinSessionDto } from 'dto/join-session.dto';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Server } from 'socket.io';
+import { makeMoveSessionDto } from 'dto/make-move-session.dt';
+import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   cors: {
@@ -26,10 +25,20 @@ export class SessionGateway {
 
   @SubscribeMessage('join')
   joinRoom(
-    @ConnectedSocket() client: any,
+    @ConnectedSocket() client: Socket,
     @MessageBody() joinSessionDto: JoinSessionDto,
   ): void {
     this.server.emit('friendJoined', joinSessionDto.friendName);
     client.join(joinSessionDto.roomId);
+  }
+
+  @SubscribeMessage('move')
+  move(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() makeMoveSessionDto: makeMoveSessionDto,
+  ) {
+    this.server
+      .to(makeMoveSessionDto.roomId)
+      .emit('move', makeMoveSessionDto.boardState);
   }
 }

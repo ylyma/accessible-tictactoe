@@ -10,7 +10,7 @@ This is an accessible tictactoe web application, designed to be as inclusive as 
 
 #### Installation
 
-1. You need to have (MongoDB)[https://www.mongodb.com/docs/manual/installation/] installed.
+1. You need to have [MongoDB](https://www.mongodb.com/docs/manual/installation/) installed.
 
 #### Usage
 

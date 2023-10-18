@@ -15,7 +15,7 @@ import PastGameDetailScreen from "./screens/PastGameDetailScreen";
 
 function App() {
   const [playerName, setPlayerName] = useState<string>("");
-  const [user, setUser] = useState({ playerName: "", uuid: "" });
+  const [user, setUser] = useState({ playerName: "", uuid: "", symbol: "" });
   return (
     <ThemeProvider theme={theme}>
       <UserContext.Provider value={user}>

@@ -42,7 +42,11 @@ const GameNameInput = () => {
         finished: false,
       })
       .then((res) => {
-        setUser({ playerName: playerName, uuid: res.data.newGame._id });
+        setUser({
+          playerName: playerName,
+          uuid: res.data.newGame,
+          symbol: "X",
+        });
         console.log(res);
       });
     createRoom();

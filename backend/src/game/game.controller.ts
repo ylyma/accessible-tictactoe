@@ -33,14 +33,15 @@ export class GameController {
     }
   }
 
-  @Put('/:id')
+  @Put('/:id/:player')
   async editGame(
     @Res() Response,
     @Param('id') id: string,
+    @Param('player') player: string,
     @Body() editGameDto: EditGameDto,
   ) {
     try {
-      const game = await this.gameService.editGame(id, editGameDto);
+      const game = await this.gameService.editGame(id, player, editGameDto);
       return Response.status(HttpStatus.OK).json({
         message: 'Game update',
         game,

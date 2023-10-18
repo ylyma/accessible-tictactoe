@@ -11,7 +11,7 @@ const PlayerNameInput = () => {
   const playerName = useContext(UserContext).playerName;
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ playerName: event.target.value, uuid: "" });
+    setUser({ playerName: event.target.value, uuid: "", symbol: "" });
   };
 
   return (

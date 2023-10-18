@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -19,6 +19,7 @@ import { Button, ButtonProps, TableHead } from "@mui/material";
 import "./CurrentGamesTable.css";
 import { io } from "socket.io-client";
 import { useNavigate, useNavigation } from "react-router";
+import { UserContext, UserDispatchContext } from "../context/UserContext";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -100,12 +101,9 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-type Props = {
-  playerName: string;
-};
-
-const CurrentGamesTable = ({ playerName }: Props) => {
+const CurrentGamesTable = () => {
   const [games, setGames] = useState<any>();
+  const playerName = useContext(UserContext).playerName;
 
   useEffect(() => {
     axios.get("http://localhost:3001/game/get").then((res) => {
@@ -138,6 +136,7 @@ const CurrentGamesTable = ({ playerName }: Props) => {
   const [roomId, setRoomId] = useState<string>();
 
   const navigate = useNavigate();
+  const setUser = useContext(UserDispatchContext);
 
   const socket = io("http://localhost:3001", {
     transports: ["websocket"],
@@ -166,6 +165,11 @@ const CurrentGamesTable = ({ playerName }: Props) => {
     console.log(e.target.value);
     const uuid = e.target.value;
     setRoomId(uuid);
+    setUser({
+      playerName: playerName,
+      uuid: roomId ? roomId : "",
+      symbol: "O",
+    });
     connectSocket();
     joinRoom();
 

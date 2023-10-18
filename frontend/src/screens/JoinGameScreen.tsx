@@ -7,10 +7,9 @@ import { UserContext } from "../context/UserContext";
 
 const JoinGameScreen = () => {
   const theme = useTheme();
-  const playerName = useContext(UserContext).playerName;
   return (
     <Box className="main" bgcolor={theme.palette.secondary.dark}>
-      <CurrentGamesTable playerName={playerName} />
+      <CurrentGamesTable />
     </Box>
   );
 };

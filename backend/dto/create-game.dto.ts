@@ -22,7 +22,7 @@ export class CreateGameDto {
 
   @IsArray()
   @IsOptional()
-  moves: { action: number[]; player: string }[];
+  moves: { action: string[][]; player: string }[];
 
   @IsArray()
   @IsOptional()

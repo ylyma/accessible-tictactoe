@@ -18,7 +18,7 @@ export class GameService {
     return id;
   }
 
-  async editGame(id: string, editGameDto: EditGameDto) {
+  async editGame(id: string, player: string, editGameDto: EditGameDto) {
     const bs = editGameDto.boardState;
     let win = false;
     let finished = true;
@@ -46,6 +46,8 @@ export class GameService {
 
     editGameDto.finished = win || finished;
     editGameDto.finishedAt = win || finished ? new Date() : undefined;
+    const newMove = { action: editGameDto.boardState, player: player };
+    editGameDto.moves.push(newMove);
     if (win) {
       const currentMove = editGameDto.moves.pop();
       editGameDto.winner = Array(currentMove.player);

@@ -16,9 +16,9 @@ export class EditGameDto {
   @IsNotEmpty()
   boardState: string[][];
 
-  @IsArray()
-  @IsNotEmpty()
-  moves: { action: number[]; player: string }[];
+  @IsString()
+  @IsOptional()
+  moves: { action: string[][]; player: string }[];
 
   @IsArray()
   @IsOptional()

@@ -12,7 +12,7 @@ export class Game {
   boardState: string[][];
 
   @Prop()
-  moves: {action: number[], player: string}[]
+  moves: { action: string[][]; player: string }[];
 
   @Prop()
   winner?: string[];

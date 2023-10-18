@@ -4,7 +4,7 @@ export interface IGame extends Document {
   readonly gameName: string;
   playersInvolved: string[];
   boardState: string[][];
-  moves: { action: number[]; player: string };
+  moves: { action: string[][]; player: string };
   winner?: string[];
   finished: boolean;
   finishedAt?: Date;

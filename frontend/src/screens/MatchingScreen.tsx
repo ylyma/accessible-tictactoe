@@ -30,7 +30,7 @@ const MatchingScreen = () => {
 
   useEffect(() => {
     socket.emit("matching", uuid);
-  }, []);
+  });
   return (
     <div>
       <p className="matching__text">FINDING PLAYERS...</p>

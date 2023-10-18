@@ -3,6 +3,8 @@ import "./TicTacToe.css";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import { io } from "socket.io-client";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Square = (props: {
   disabled: boolean;
@@ -53,6 +55,7 @@ const TicTacToe = () => {
   const [disabled, setDisabled] = useState<boolean>(false);
   const [win, setWin] = useState<boolean>(false);
   const [winner, setWinner] = useState<string>("");
+  const navigate = useNavigate();
 
   const updateBoard = () => {
     axios
@@ -126,6 +129,7 @@ const TicTacToe = () => {
       <div>
         <p className="ttt__msg">{message}</p>
       </div>
+      <Button onClick={() => navigate("/")}>Go Home</Button>
     </div>
   );
 };

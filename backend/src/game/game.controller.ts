@@ -63,4 +63,17 @@ export class GameController {
       return response.status(err.status).json(err.response);
     }
   }
+
+  @Get('/past')
+  async getPastGames(@Res() response) {
+    try {
+      const games = await this.gameService.getGames();
+      return response.status(HttpStatus.OK).json({
+        message: 'Games loaded',
+        games: games.filter((game) => game.finished === true),
+      });
+    } catch (err) {
+      return response.status(err.status).json(err.response);
+    }
+  }
 }

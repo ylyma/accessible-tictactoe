@@ -5,10 +5,9 @@ import { UserContext } from "../context/UserContext";
 
 const PastGameScreen = () => {
   const theme = useTheme();
-  const playerName = useContext(UserContext).playerName;
   return (
     <Box className="main" bgcolor={theme.palette.secondary.dark}>
-      <PastGamesTable playerName={playerName} />
+      <PastGamesTable />
     </Box>
   );
 };

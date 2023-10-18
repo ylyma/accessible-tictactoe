@@ -99,47 +99,11 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-type Props = {
-  playerName: string;
-};
-
-const PastGamesTable = ({ playerName }: Props) => {
-  const [games, setGames] = useState<any>();
-
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/game/get`).then((res) => {
-      setGames(res.data.games);
-    });
-  }, []);
-
-  const finishedGames = !games ? [] : games.filter((g: any) => g.finished);
-
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - finishedGames.length) : 0;
-
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
-  };
-
-  const navigate = useNavigate();
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const handleCellClick = (e: any) => {
-    navigate("/pastgamedetail");
-  };
+const PastGamesTable = () => {
+  const [games, setGames] = useState<any>([]);
+  const [paginatedGames, setPaginatedGames] = useState<any>([]);
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
 
   const CellButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: theme.palette.getContrastText(theme.palette.success.main),
@@ -154,13 +118,48 @@ const PastGamesTable = ({ playerName }: Props) => {
     },
   }));
 
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleCellClick = (e: any) => {
+    // TODO
+    return;
+  };
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/game/past`).then((res) => {
+      setGames(res.data.games);
+    });
+  }, []);
+
+  useEffect(() => {
+    setPaginatedGames(
+      games.slice(
+        page * rowsPerPage,
+        Math.min((page + 1) * rowsPerPage),
+        games.length
+      )
+    );
+  }, [games, page, rowsPerPage]);
+
   return (
     <div className="current-games__main">
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead className="current-games__header">
             <TableRow>
-              <TableCell sx={{ fontSize: 40 }}>Current games</TableCell>
+              <TableCell sx={{ fontSize: 40 }}>Past games</TableCell>
               <TableCell sx={{ fontSize: 40 }} align="right">
                 Players
               </TableCell>
@@ -170,20 +169,20 @@ const PastGamesTable = ({ playerName }: Props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {!finishedGames
+            {!paginatedGames
               ? "loading"
-              : finishedGames.map((game: any) => (
+              : paginatedGames.map((game: any) => (
                   <TableRow
-                    key={game.gameName}
+                    key={game._id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      <CellButton onClick={handleCellClick}>
+                      <CellButton value={game._id} onClick={handleCellClick}>
                         {game.gameName}
                       </CellButton>
                     </TableCell>
                     <TableCell sx={{ fontSize: 30 }} align="right">
-                      {game.playersInvolved.length == 2
+                      {game.playersInvolved.length === 2
                         ? game.playersInvolved[0] +
                           ", " +
                           game.playersInvolved[1]
@@ -202,7 +201,7 @@ const PastGamesTable = ({ playerName }: Props) => {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                 colSpan={3}
-                count={finishedGames.length}
+                count={games.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{

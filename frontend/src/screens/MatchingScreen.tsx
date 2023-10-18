@@ -17,7 +17,7 @@ const MatchingScreen = () => {
   });
 
   socket.on("friendJoined", (friendName) => {
-    axios.put(`${process.env.API_URL}/game/${uuid}/${playerName}`, {
+    axios.put(`${process.env.REACT_APP_API_URL}/game/${uuid}/${playerName}`, {
       playersInvolved: [playerName, friendName],
       boardState: [
         ["", "", ""],

@@ -56,7 +56,7 @@ const TicTacToe = () => {
 
   const updateBoard = () => {
     axios
-      .put(`${process.env.API_URL}/game/${uuid}/${playerName}`, {
+      .put(`${process.env.REACT_APP_API_URL}/game/${uuid}/${playerName}`, {
         boardState: boardState,
         finished: false,
       })

@@ -16,7 +16,7 @@ const GameNameInput = () => {
 
   const handleSubmit = () => {
     axios
-      .post(`${process.env.API_URL}game/post`, {
+      .post(`${process.env.REACT_APP_API_URL}game/post`, {
         gameName: gameName,
         playersInvolved: [playerName],
         boardState: [

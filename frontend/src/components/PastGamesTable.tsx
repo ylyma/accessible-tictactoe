@@ -107,7 +107,7 @@ const PastGamesTable = ({ playerName }: Props) => {
   const [games, setGames] = useState<any>();
 
   useEffect(() => {
-    axios.get(`${process.env.API_URL}/game/get`).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/game/get`).then((res) => {
       setGames(res.data.games);
     });
   }, []);

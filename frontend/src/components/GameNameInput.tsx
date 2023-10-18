@@ -17,17 +17,6 @@ const GameNameInput = () => {
   const playerName = useContext(UserContext).playerName;
   const setUser = useContext(UserDispatchContext);
 
-  const socket = io("http://localhost:3001", {
-    transports: ["websocket"],
-    autoConnect: false,
-    query: {
-      roomId: uuid,
-    },
-  });
-
-  const createRoom = () => {
-    socket.emit("join", { friendName: playerName, roomId: uuid });
-  };
   const handleSubmit = () => {
     console.log(playerName);
     axios
@@ -49,7 +38,6 @@ const GameNameInput = () => {
         });
         console.log(res);
       });
-    createRoom();
     navigate("/matching");
   };
 

@@ -20,6 +20,9 @@ const MatchingScreen = () => {
     },
   });
 
+  const joinRoom = () => {
+    socket.emit("join", { friendName: playerName, roomId: uuid });
+  };
   const onRoomFull = () => {
     axios.put(`http://localhost:3001/${uuid}/${playerName}`, {
       playersInvolved: [playerName, friendName],
@@ -29,6 +32,7 @@ const MatchingScreen = () => {
   };
 
   useEffect(() => {
+    joinRoom();
     socket.on("friendJoined", (friendName) => {
       setIsFull(true);
       setFriendName(friendName);

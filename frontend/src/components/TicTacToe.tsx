@@ -39,11 +39,19 @@ const TicTacToe = () => {
   };
   const socket = io("http://localhost:3001", {
     transports: ["websocket"],
-    autoConnect: false,
     query: {
       roomId: uuid,
     },
   });
+
+  const joinRoom = () => {
+    socket.emit("join", { friendName: playerName, roomId: uuid });
+  };
+
+  useEffect(() => {
+    joinRoom();
+  });
+
   const handleClick = (i: string | number) => {
     const index = typeof i == "string" ? parseInt(i) : i;
     const row = index % 3;
